@@ -12,27 +12,24 @@ import { NativeStorage } from '@ionic-native/native-storage';
 })
 export class HomePage {
   oggetti: OggettoPrestato[];
+  oggettistatic: OggettoPrestato[];
   users: User[];
-  id: number;
-  nome: string;
-  a: string;
+
   constructor(public navCtrl: NavController,
               private servizioOggetto: OggettoProvider,
               private nativeStorage: NativeStorage) {
+    this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
     this.servizioOggetto.getUsers().subscribe(users => this.users = users);
-    this.id = 0;
-    this.nome = '';
-    
   }
 
-  ionViewDidLoad() {
-    this.getDatiStorage();
+  ionViewDidLoad(){
+    this.getOggettiStorage();
   }
 
-  getDatiStorage(){
-    this.nativeStorage.getItem('oggetti').then(
-      dati => {this.oggetti = dati; console.log(this.oggetti)}
-  )}
+  getOggettiStorage(){
+    this.nativeStorage.getItem('oggetti').then(oggetti => this.oggetti = oggetti );
+  }
+
   getUser(id: number):string{
     const temp = this.users.find(user => user.id === id);
     return temp.nome;

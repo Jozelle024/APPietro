@@ -42,7 +42,6 @@ export class FormPage {
   }
 
   ionViewDidLoad() {
-    console.log(this.oggettoPassato);
     this.caricaDati();
   }
 
@@ -57,6 +56,7 @@ export class FormPage {
       console.log('prova');
     },(error) => console.error(error))
   }
+  
   caricaDati(){
     if(this.oggettoPassato){
       this.nome = this.oggettoPassato.nome;
@@ -70,12 +70,11 @@ export class FormPage {
       const newOggetto = new OggettoPrestato();
       newOggetto.id =  this.oggettiLength+ 1;
       newOggetto.nome = this.nome;
-      newOggetto.idUser = 2;
       newOggetto.stato = false;
       newOggetto.data = this.data;
+      newOggetto.idUser = 2;
       this.oggetti.push(newOggetto);
       this.nativeStorage.setItem('oggetti', this.oggetti);
-      console.log(this.oggetti);
       this.navCtrl.push(HomePage);
     }
   }
