@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-  <ion-list *ngIf="oggettoPassato">
+  <!-- <ion-list *ngIf="oggettoPassato">
     <ion-item>
       <ion-label fixed><h2>Oggetto</h2></ion-label>
       <ion-input type="text" value="{{oggettoPassato.nome}}"></ion-input>
@@ -59,6 +59,31 @@
     <img [src]="imageURL" *ngIf="imageURL" />
     <ion-buttons end>
       <button ion-button color="secondary">Salva</button>
-    </ion-buttons>
+    </ion-buttons> -->
+
+    <ion-list>
+        <ion-item>
+          <ion-label fixed><h2>Oggetto</h2></ion-label>
+          <ion-input type="text" [(ngModel)]="nome"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label fixed><h2>Nome</h2></ion-label>
+          <ion-input type="text" [(ngModel)]="nomeUser" ></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label fixed><h2>Data</h2></ion-label>
+          <ion-input type="text" [(ngModel)]="data"></ion-input>
+        </ion-item>
+    
+        <ion-item tappable (click)="takePicture()">
+            <ion-label fixed><h2>Foto</h2><ion-icon name="camera"></ion-icon></ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-buttons end>
+          <button ion-button color="secondary" (click)="salvaDati()">Salva</button>
+      </ion-buttons>
 </ion-content>
     
