@@ -20,7 +20,7 @@
               <p>prestato a: {{getUser(oggetto.idUser)}}, in data: {{oggetto.data}}</p>
           </ion-item>
         <ion-item-options side="left">
-          <button ion-button >Modifica</button>
+          <button ion-button (click)="vaiPaginaModifica(oggetto)">Modifica</button>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>

@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { OggettoProvider } from '../providers/oggetto/oggetto';
 import { FormPage } from '../pages/form/form';
 import { NativeStorage } from '@ionic-native/native-storage'; 
+import { Camera } from '@ionic-native/camera'
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     OggettoProvider,
-    NativeStorage
+    NativeStorage,
+    Camera
   ]
 })
 export class AppModule {}

@@ -33,4 +33,9 @@ export class HomePage {
   vaiAllaFormPage(){
     this.navCtrl.push(FormPage);
   }
+
+  vaiPaginaModifica(oggetto: OggettoPrestato, user: string){
+    this.navCtrl.push(FormPage,
+    { oggetto: oggetto });
+  }
 }
