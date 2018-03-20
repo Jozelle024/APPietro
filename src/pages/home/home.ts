@@ -26,15 +26,9 @@ export class HomePage {
   ionViewDidLoad() {
   }
 
-  getUser(id: number){
+  getUser(id: number):string{
     const temp = this.users.find(user => user.id === id);
-    console.log(id);
-    this.nome = temp.nome;
-    this.id = temp.id;
-  }
-  
-  prova(){
-    console.log('prova');
+    return temp.nome;
   }
   vaiAllaFormPage(){
     this.navCtrl.push(FormPage);

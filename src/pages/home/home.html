@@ -12,19 +12,16 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <ion-list-header> <h2>Oggetti Prestati</h2></ion-list-header>
-    <ion-item-group *ngIf="oggetti">
-      <ion-item *ngFor="let oggetto of oggetti">
-         <h1>{{oggetto.nome}}</h1>
-         <p>prestato a: {{oggetto.idUser}}<span>, in data: {{oggetto.data}}</span></p>
-         <div class="buttons">
-            <button ion-button color="success" *ngIf="oggetto.stato === false">  <ion-icon name="checkmark-circle"></ion-icon></button>
-            <button ion-button color="danger" *ngIf="oggetto.stato === true">  <ion-icon name="close-circle"></ion-icon></button>     
-         </div>
-      </ion-item>
-      
-    </ion-item-group>
-  </ion-list>
- 
+  <ion-list *ngIf="oggetti">
+    <ion-list-header><h2>Oggetti Prestati</h2></ion-list-header>
+      <ion-item-sliding *ngFor="let oggetto of oggetti"  #item>
+          <ion-item>
+              <h1>{{oggetto.nome}}</h1>
+              <p>prestato a: {{getUser(oggetto.idUser)}}, in data: {{oggetto.data}}</p>
+          </ion-item>
+        <ion-item-options side="left">
+          <button ion-button >Modifica</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
  </ion-content>
