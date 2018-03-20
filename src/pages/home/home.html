@@ -12,16 +12,16 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngIf="oggetti">
-    <ion-list-header><h2>Oggetti Prestati</h2></ion-list-header>
-      <ion-item-sliding *ngFor="let oggetto of oggetti"  #slidingItem>
-          <ion-item>
-              <h1>{{oggetto.nome}}</h1>
-              <p>prestato a: {{getUser(oggetto.idUser)}}, in data: {{oggetto.data}}</p>
-              <p>Restituito: {{isRestituito(oggetto)}} 
-                <button *ngIf="oggetto.stato === false" ion-button color="success" (click)="restituito(oggetto)"><ion-icon name="checkmark-circle"></ion-icon></button>
-              </p>
-          </ion-item>
+    <ion-list *ngIf="oggetti">
+      <ion-list-header>Oggetti Prestati</ion-list-header>
+      <ion-item-sliding>
+        <ion-item *ngFor="let oggetto of oggetti">
+          <h1>{{oggetto.nome}}</h1>
+          <p>prestato a: {{getUser(oggetto.idUser)}}, in data: {{oggetto.data}}</p>
+          <p>Restituito: {{isRestituito(oggetto)}} 
+            <button *ngIf="oggetto.stato === false" ion-button color="success" (click)="restituito(oggetto)"><ion-icon name="checkmark-circle"></ion-icon></button>
+          </p>
+        </ion-item>
         <ion-item-options side="left">
           <button ion-button (click)="vaiPaginaModifica(oggetto)">Modifica</button>
         </ion-item-options>

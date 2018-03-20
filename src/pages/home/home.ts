@@ -12,13 +12,13 @@ import { NativeStorage } from '@ionic-native/native-storage';
 })
 export class HomePage {
   oggetti: OggettoPrestato[];
-  oggettistatic: OggettoPrestato[];
   users: User[];
 
   constructor(public navCtrl: NavController,
               private servizioOggetto: OggettoProvider,
               private nativeStorage: NativeStorage) {
-    this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
+    //this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
+    this.oggetti = [];
     this.servizioOggetto.getUsers().subscribe(users => this.users = users);
   }
 
@@ -27,7 +27,9 @@ export class HomePage {
   }
 
   getOggettiStorage(){
-    this.nativeStorage.getItem('oggetti').then(oggetti => this.oggetti = oggetti );
+    this.nativeStorage.getItem('oggetto').then(oggetto => {
+      this.oggetti = this.oggetti.concat(oggetto);
+    })
   }
 
   getUser(id: number):string{
@@ -39,9 +41,9 @@ export class HomePage {
     this.navCtrl.push(FormPage);
   }
 
-  vaiPaginaModifica(oggetto: OggettoPrestato, user: string){
+  vaiPaginaModifica(oggettoInviato: OggettoPrestato){
     this.navCtrl.push(FormPage,
-    { oggetto: oggetto });
+    { oggettoRicevuto: oggettoInviato });
   }
 
   isRestituito(oggetto: OggettoPrestato){

@@ -22,9 +22,8 @@ import { HomePage } from '../home/home';
 export class FormPage {
   options: CameraOptions;
   imageUrl;
-  oggettoPassato: OggettoPrestato;
-  oggetti: OggettoPrestato[];
-  oggettiLength: number;
+  oggettoRicevuto: OggettoPrestato;
+  newOggetto: OggettoPrestato = new OggettoPrestato();
   users: User[];
   nome: string;
   idUser: number;
@@ -35,14 +34,17 @@ export class FormPage {
               private camera: Camera,
               private servizioOggetto: OggettoProvider,
               private nativeStorage: NativeStorage) {
-    this.oggettoPassato = this.navParams.get('oggetto');
+    this.oggettoRicevuto = this.navParams.get('oggettoRicevuto');
+    console.log(this.navParams.get('oggettoRicevuto'));
     this.servizioOggetto.getUsers().subscribe(users => this.users = users);
-    this.oggettiLength = 0;
-    this.oggetti = [];
+    this.nome = '';
+    this.data = '';
+    this.idUser = 0;
   }
 
   ionViewDidLoad() {
     this.caricaDati();
+    console.log(this.oggettoRicevuto);
   }
 
   getUser(id: number):string{
@@ -58,25 +60,21 @@ export class FormPage {
   }
   
   caricaDati(){
-    if(this.oggettoPassato){
-      this.nome = this.oggettoPassato.nome;
-      this.data = this.oggettoPassato.data;
-      this.idUser = this.oggettoPassato.idUser;
-    }
+      console.log(this.oggettoRicevuto);
   }
 
   salvaDati(){
-    if(!this.oggettoPassato) {
+    if(!this.oggettoRicevuto) {
       const newOggetto = new OggettoPrestato();
-      newOggetto.id =  this.oggettiLength+ 1;
+      newOggetto.id =  1;
       newOggetto.nome = this.nome;
       newOggetto.stato = false;
       newOggetto.data = this.data;
-      newOggetto.idUser = 2;
-      this.oggetti.push(newOggetto);
-      this.nativeStorage.setItem('oggetti', this.oggetti);
+      newOggetto.idUser = 1;
+      this.nativeStorage.setItem('oggetto', newOggetto).then(
+        ()=> console.log('Set item success')
+      );
       this.navCtrl.push(HomePage);
     }
   }
-
 }
