@@ -31,4 +31,8 @@ export class OggettoProvider {
     return of (this.oggetti);
   }
 
+  getUsers(): Observable<User[]>{
+    return of (this.users);
+  }
+
 }

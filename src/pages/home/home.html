@@ -12,8 +12,14 @@
     <ion-item-group *ngIf="oggetti">
       <ion-item *ngFor="let oggetto of oggetti">
          <h1>{{oggetto.nome}}</h1>
-         <p>prestato a: <span>{{}}</span></p>
+         <p>prestato a:  {{oggetto.idUser}} <span on-load= "prova(oggetto.idUser)"></span> <span>, in data: {{oggetto.data}}</span></p>
+         <div class="buttons">
+            <button ion-button color="success" *ngIf="oggetto.stato === false">  <ion-icon name="checkmark-circle"></ion-icon></button>
+            <button ion-button color="danger" *ngIf="oggetto.stato === true">  <ion-icon name="close-circle"></ion-icon></button>     
+         </div>
       </ion-item>
+      
     </ion-item-group>
   </ion-list>
+ 
  </ion-content>
