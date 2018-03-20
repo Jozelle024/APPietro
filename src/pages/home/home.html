@@ -3,6 +3,11 @@
     <ion-title>
       Home
     </ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="vaiAllaFormPage()">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -12,8 +17,7 @@
     <ion-item-group *ngIf="oggetti">
       <ion-item *ngFor="let oggetto of oggetti">
          <h1>{{oggetto.nome}}</h1>
-         <p>prestato a:  {{oggetto.idUser}} <span>, in data: {{oggetto.data}}</span></p>
-         
+         <p>prestato a: {{oggetto.idUser}}<span>, in data: {{oggetto.data}}</span></p>
          <div class="buttons">
             <button ion-button color="success" *ngIf="oggetto.stato === false">  <ion-icon name="checkmark-circle"></ion-icon></button>
             <button ion-button color="danger" *ngIf="oggetto.stato === true">  <ion-icon name="close-circle"></ion-icon></button>     
