@@ -9,10 +9,11 @@
 <ion-content padding>
   <ion-list>
     <ion-list-header> <h2>Oggetti Prestati</h2></ion-list-header>
-    <ion-item-group>
-      <ion-item>
-        Itemdetails
+    <ion-item-group *ngIf="oggetti">
+      <ion-item *ngFor="let oggetto of oggetti">
+         <h1>{{oggetto.nome}}</h1>
+         <p>prestato a: <span>{{}}</span></p>
       </ion-item>
     </ion-item-group>
   </ion-list>
-</ion-content>
+ </ion-content>
