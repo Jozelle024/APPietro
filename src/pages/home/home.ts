@@ -22,16 +22,14 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    console.log(this.id);
   }
 
   getUser(id: number): number{
     const temp = this.users.find(user => user.id === id);
     return temp.id;
   }
-  prova(id: number){
-    this.id = id;
-    console.log(id);
-  }
   
+  prova(){
+    console.log('prova');
+  }
 }
