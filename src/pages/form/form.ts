@@ -44,9 +44,10 @@ export class FormPage {
   }
 
   ionViewDidLoad() {
-    if(this.oggettoRicevuto){
-      this.nome = this.oggettoRicevuto.nome;
+    this.nativeStorage.getItem('oggetti').then(data => {
+    this.oggetti = this.oggetti.concat(data);
     }
+  );
   }
 
   getUser(id: number):string{
@@ -65,9 +66,7 @@ export class FormPage {
       this.oggetti.push(newOggetto);
       console.log(this.oggetti);
       this.nativeStorage.setItem('oggetti', this.oggetti);
-      this.navCtrl.push(HomePage, {
-        insertedOggetti: this.oggetti
-      })
+      this.navCtrl.push(HomePage);
     }
   }
 

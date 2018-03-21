@@ -43,9 +43,9 @@ export class HomePage {
     this.navCtrl.push(FormPage);
   }
 
-  vaiPaginaModifica(oggettoInviato: OggettoPrestato){
+  vaiPaginaModifica(oggetto: OggettoPrestato){
     this.navCtrl.push(FormPage,
-    { oggettoRicevuto: oggettoInviato });
+    { oggetto: oggetto});
   }
 
   isRestituito(oggetto: OggettoPrestato){
