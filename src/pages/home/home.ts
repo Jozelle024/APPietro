@@ -4,7 +4,6 @@ import { OggettoProvider } from '../../providers/oggetto/oggetto';
 import { OggettoPrestato } from '../../models/oggettoPrestato';
 import { User } from '../../models/user';
 import { FormPage } from '../form/form';
-import { NativeStorage } from '@ionic-native/native-storage';
 
 @Component({
   selector: 'page-home',
@@ -16,25 +15,16 @@ export class HomePage {
   users: User[];
 
   constructor(public navCtrl: NavController,
-              private servizioOggetto: OggettoProvider,
-              private nativeStorage: NativeStorage) {
-    //this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
-    this.servizioOggetto.getUsers().subscribe(users => this.users = users);
-    this.insertedOggetti = [];
+              private servizioOggetto: OggettoProvider) {
+    this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.insertedOggetti = oggetti);
+    this.servizioOggetto.getUsers().subscribe(users => this.users = users );
   }
 
   ionViewDidLoad(){
-    this.getOggettiStorage();
-  }
-
-  getOggettiStorage(){
-    this.nativeStorage.getItem('oggetti').then(data => {
-      this.insertedOggetti = data;
-      console.log(this.insertedOggetti);
-    })
   }
 
   getUser(id: number):string{
+    
     const temp = this.users.find(user => user.id === id);
     return temp.nome;
   }
@@ -44,6 +34,7 @@ export class HomePage {
   }
 
   vaiPaginaModifica(oggetto: OggettoPrestato){
+    console.log(oggetto)
     this.navCtrl.push(FormPage,
     { oggetto: oggetto});
   }

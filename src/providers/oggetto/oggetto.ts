@@ -3,6 +3,7 @@ import { User } from '../../models/user';
 import { OggettoPrestato } from '../../models/oggettoPrestato';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 /*
   Generated class for the OggettoProvider provider.
@@ -12,21 +13,28 @@ import { of } from 'rxjs/observable/of';
 */
 @Injectable()
 export class OggettoProvider {
-  user: User;
   users: User[];
-  oggetto: OggettoPrestato;
-  oggetti: OggettoPrestato[];
-  constructor() {
-    this.users = [{id: 1, nome: 'Jozelle', cognome: 'Lauzon'}]
-    this.oggetti = [{id: 1, nome: 'Oggetto 1', stato: true, data:'2018-4-5', idUser: 1}]
+  oggetti: OggettoPrestato[] = [];
+  user: User;
+  constructor(private nativeStorage: NativeStorage) {
+    this.user = {id: 1, nome: 'Jozelle'}
+    this.users = [];
+    // this.oggetti = [{id: 1, nome: 'Oggetto 1', stato: true, data:'2018-4-5', idUser: 1}]
   }
 
   getOggettiPrestati(): Observable<OggettoPrestato[]>{
+    this.nativeStorage.getItem('oggetti').then(data => {
+      this.oggetti = data;
+      }
+    );
     return of (this.oggetti);
   }
 
   getUsers(): Observable<User[]>{
+    this.nativeStorage.setItem('users', this.user);
+    this.nativeStorage.getItem('users').then(data => {
+        this.users = this.users.concat(data);
+    })
     return of (this.users);
   }
-
 }

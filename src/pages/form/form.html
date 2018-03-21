@@ -17,29 +17,30 @@
   <ion-list>
     <ion-item>
       <ion-label fixed><h2>Oggetto</h2></ion-label>
-      <ion-input type="text" [(ngModel)]="nome"></ion-input>
+      <ion-input type="text" [(ngModel)]="nome" value="{{nome}}"></ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label fixed><h2>Nome</h2></ion-label>
-      <ion-input type="text" [(ngModel)]="nomeUser" ></ion-input>
+      <ion-input type="text" [(ngModel)]="nomeUser" value={{getUser(id)}}></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label fixed><h2>Data</h2></ion-label>
-      <ion-input type="date" [(ngModel)]="data"></ion-input>
+      <ion-input type="date" [(ngModel)]="data" value="{{data}}"></ion-input>
     </ion-item>
 
     <ion-item tappable (click)="takePicture()">
         <ion-label fixed><h2>Foto</h2><ion-icon name="camera"></ion-icon></ion-label>
     </ion-item>
   </ion-list>
-    <ion-card class="block">
-      <img [src]="photo" *ngIf="photo">
+    <ion-card>
+      <img [src]="base64Image" *ngIf="base64Image">
     </ion-card>
 
     <ion-buttons end>
-        <button ion-button color="secondary" (click)="salvaDati()">Salva</button>
+        <button *ngIf="oggettoRicevuto" ion-button (click)="modificaDati(oggettoRicevuto)">Modifica</button>
+        <button *ngIf="!oggettoRicevuto"ion-button color="secondary" (click)="salvaDati()">Salva</button>
     </ion-buttons>
 </ion-content>
     

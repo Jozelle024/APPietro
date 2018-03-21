@@ -29,13 +29,13 @@ export class FormPage {
   data: string;
   id: number;
   base64Image;
-  photos;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private camera: Camera,
               private servizioOggetto: OggettoProvider,
               private nativeStorage: NativeStorage) {
-    this.oggettoRicevuto = this.navParams.get('oggettoRicevuto');
+    this.oggettoRicevuto = this.navParams.get('oggetto');
+    this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
     this.servizioOggetto.getUsers().subscribe(users => this.users = users);
     this.nome = '';
     this.data = '';
@@ -44,27 +44,42 @@ export class FormPage {
   }
 
   ionViewDidLoad() {
-    this.nativeStorage.getItem('oggetti').then(data => {
-    this.oggetti = this.oggetti.concat(data);
+    if(this.oggettoRicevuto){
+      this.nome = this.oggettoRicevuto.nome;
+      this.idUser = this.oggettoRicevuto.idUser;
+      this.data = this.oggettoRicevuto.data;
+      this.base64Image = this.oggettoRicevuto.imgUrl;
     }
-  );
   }
 
   getUser(id: number):string{
+    if(id){
+      const temp = this.users.find(user => user.id === id);
+      return temp.nome;
+    } else {
+      return '';
+    }
+  }
+
+  isUserExist(id: number){
     const temp = this.users.find(user => user.id === id);
-    return temp.nome;
+    if(temp){
+      return temp.id;
+    } else {
+      return id;
+    }
   }
 
   salvaDati(){
     if(this.oggetti){
       const newOggetto = new OggettoPrestato();
-      newOggetto.id = this.id + 1;
       newOggetto.nome = this.nome;
-      newOggetto.stato = false;
       newOggetto.data = this.data;
-      newOggetto.idUser = this.idUser;
+      newOggetto.id = this.id + 1;
+      newOggetto.stato = false;
+      newOggetto.idUser = this.isUserExist(this.idUser);
+      newOggetto.imgUrl = this.base64Image;
       this.oggetti.push(newOggetto);
-      console.log(this.oggetti);
       this.nativeStorage.setItem('oggetti', this.oggetti);
       this.navCtrl.push(HomePage);
     }
@@ -72,16 +87,17 @@ export class FormPage {
 
   takePicture(){
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: 0
+      sourceType: 1,
+      targetWidth: 160,
+      targetHeight: 160
     }
     this.camera.getPicture(options).then((imageData) => {
-      this.base64Image = "data:image/jpeg;base64," + imageData
-      this.photos.push(this.base64Image);
-      console.log('prova');
-    },(error) => console.error(error))
+      this.base64Image = "data:image/jpeg;base64," + imageData;
+
+    },(error) => console.error(error));
   }
 }

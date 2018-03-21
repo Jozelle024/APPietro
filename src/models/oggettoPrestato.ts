@@ -4,4 +4,5 @@ export class OggettoPrestato {
     stato: boolean // se è stato restituito
     data: string // data
     idUser: number // id dello user a cui è stato prestato l'oggetto
+    imgUrl;
 }

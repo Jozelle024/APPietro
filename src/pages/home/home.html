@@ -17,7 +17,7 @@
       <ion-item-sliding *ngFor="let oggetto of insertedOggetti">
         <ion-item >
           <ion-avatar>
-              <img src="#">
+              <img [src]="oggetto.imgUrl">
           </ion-avatar>
           <h1>{{oggetto.nome}}</h1>
           <p>prestato a: {{getUser(oggetto.idUser)}}, in data: {{oggetto.data}}</p>
