@@ -39,7 +39,7 @@
     </ion-card>
 
     <ion-buttons end>
-        <button *ngIf="oggettoRicevuto" ion-button (click)="modificaDati(oggettoRicevuto)">Modifica</button>
+        <button *ngIf="oggettoRicevuto" ion-button (click)="salvaModifica(oggettoRicevuto)">Modifica</button>
         <button *ngIf="!oggettoRicevuto"ion-button color="secondary" (click)="salvaDati()">Salva</button>
     </ion-buttons>
 </ion-content>

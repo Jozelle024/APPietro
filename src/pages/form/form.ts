@@ -43,17 +43,9 @@ export class FormPage {
   }
 
   ionViewDidLoad() {
-    this.oggetti = this.servizioOggetto.getOggettiPrestati();
-    //this.nativeStorage.getItem('oggetti').then(data => this.oggetti = data);
-    // this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
+    this.nativeStorage.getItem('oggetti').then(data => this.oggetti = data);
     this.servizioOggetto.getUsers().subscribe(users => this.users = users);
-    
-    if(this.oggettoRicevuto){
-      this.nome = this.oggettoRicevuto.nome;
-      this.idUser = this.oggettoRicevuto.idUser;
-      this.data = this.oggettoRicevuto.data;
-      this.base64Image = this.oggettoRicevuto.imgUrl;
-    }
+    this.modificaDati();
   }
 
   getUser(id: number):string{
@@ -75,10 +67,35 @@ export class FormPage {
       newOggetto.idUser = this.idUser;
       newOggetto.imgUrl = this.base64Image;
       this.oggetti.push(newOggetto);
+      console.log(this.oggetti);
       this.nativeStorage.setItem('oggetti', this.oggetti).then(
         () => {this.navCtrl.push(HomePage);}
       );
     }
+  }
+  
+  modificaDati(){
+    if(this.oggettoRicevuto){
+      this.nome = this.oggettoRicevuto.nome;
+      this.idUser = this.oggettoRicevuto.idUser;
+      this.data = this.oggettoRicevuto.data;
+      this.base64Image = this.oggettoRicevuto.imgUrl;
+    }
+  }
+  salvaModifica(){
+    const oggettoModificato = new OggettoPrestato();
+    oggettoModificato.nome = this.nome;
+    oggettoModificato.data = this.data;
+    oggettoModificato.id = this.id;
+    oggettoModificato.stato = false;
+    oggettoModificato.idUser = this.idUser;
+    oggettoModificato.imgUrl = this.base64Image;
+    this.oggetti.push(oggettoModificato);
+    const index = this.oggetti.map((oggetto) => { return oggetto.id }).indexOf(this.oggettoRicevuto.id);
+    this.oggetti.splice(index, 1);
+    this.nativeStorage.setItem('oggetti', this.oggetti).then(
+      () => { this.navCtrl.push(HomePage);}
+    )
   }
 
   takePicture(){

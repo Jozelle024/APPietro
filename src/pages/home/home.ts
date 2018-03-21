@@ -25,10 +25,8 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
-    /* this.servizioOggetto.getOggettiPrestati().subscribe(oggettiInseriti => {
-      this.insertedOggetti = oggettiInseriti;});
-    this.nativeStorage.getItem('oggetti').then(data => this.insertedOggetti = data); */
-    this.insertedOggetti = this.servizioOggetto.getOggettiPrestati();
+    this.nativeStorage.getItem('oggetti').then(data => this.insertedOggetti = data);
+   //this.insertedOggetti = this.servizioOggetto.getOggettiPrestati();
     this.servizioOggetto.getUsers().subscribe(users => this.users = users );
   }
 
@@ -42,7 +40,6 @@ export class HomePage {
   }
 
   vaiPaginaModifica(oggetto: OggettoPrestato){
-    console.log(oggetto)
     this.navCtrl.push(FormPage,
     { oggetto: oggetto});
   }
