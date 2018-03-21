@@ -24,11 +24,9 @@ export class OggettoProvider {
     // this.oggetti = [{id: 1, nome: 'Oggetto 1', stato: true, data:'2018-4-5', idUser: 1}]
   }
 
-  getOggettiPrestati(): Observable<OggettoPrestato[]>{
-    this.nativeStorage.getItem('oggetti').then(data => {
-      this.oggetti = data;
-      });
-    return of (this.oggetti);
+  getOggettiPrestati(){
+    this.nativeStorage.getItem('oggetti').then(data => this.oggetti = data);
+    return this.oggetti;
   }
 
   getUsers(): Observable<User[]>{

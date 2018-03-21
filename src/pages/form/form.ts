@@ -43,7 +43,8 @@ export class FormPage {
   }
 
   ionViewDidLoad() {
-    this.nativeStorage.getItem('oggetti').then(data => this.oggetti = data);
+    this.oggetti = this.servizioOggetto.getOggettiPrestati();
+    //this.nativeStorage.getItem('oggetti').then(data => this.oggetti = data);
     // this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
     this.servizioOggetto.getUsers().subscribe(users => this.users = users);
     

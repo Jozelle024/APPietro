@@ -26,8 +26,9 @@ export class HomePage {
 
   ionViewDidLoad(){
     /* this.servizioOggetto.getOggettiPrestati().subscribe(oggettiInseriti => {
-      this.insertedOggetti = oggettiInseriti;}); */
-    this.nativeStorage.getItem('oggetti').then(data => this.insertedOggetti = data);
+      this.insertedOggetti = oggettiInseriti;});
+    this.nativeStorage.getItem('oggetti').then(data => this.insertedOggetti = data); */
+    this.insertedOggetti = this.servizioOggetto.getOggettiPrestati();
     this.servizioOggetto.getUsers().subscribe(users => this.users = users );
   }
 
@@ -67,5 +68,17 @@ export class HomePage {
       position: 'bottom'
     });
     toast.present();
+  }
+
+  clear(){
+    this.nativeStorage.clear().then( () => {
+      const toast = this.toastCtrl.create({
+        message: 'Local storage cleared',
+        duration: 2000,
+        position: 'top'
+      });
+      toast.present();
+    });
+    
   }
 }
