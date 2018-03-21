@@ -27,7 +27,7 @@
 
     <ion-item>
       <ion-label fixed><h2>Data</h2></ion-label>
-      <ion-input type="date" [(ngModel)]="data" value="{{data}}"></ion-input>
+      <ion-datetime displayformat="DD/MMYYY" [(ngModel)]="data" ></ion-datetime>
     </ion-item>
 
     <ion-item tappable (click)="takePicture()">

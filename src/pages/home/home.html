@@ -15,14 +15,15 @@
     <ion-list *ngIf="oggetti">
       <ion-list-header>Oggetti Prestati</ion-list-header>
       <ion-item-sliding *ngFor="let oggetto of insertedOggetti">
-        <ion-item >
+        <ion-item (click)="openToast()" >
           <ion-avatar>
               <img [src]="oggetto.imgUrl">
           </ion-avatar>
           <h1>{{oggetto.nome}}</h1>
           <p>prestato a: {{getUser(oggetto.idUser)}}, in data: {{oggetto.data}}</p>
           <p>Restituito: {{isRestituito(oggetto)}} 
-            <button *ngIf="oggetto.stato === false" ion-button color="success" (click)="restituito(oggetto)"><ion-icon name="checkmark-circle"></ion-icon></button>
+            <button *ngIf="oggetto.stato === false" ion-button color="success" (click)="restituito(oggetto)"><ion-icon name = "checkmark-circle" ></ion-icon></button>
+            <button *ngIf="oggetto.stato === true" ion-button color="danger" (click)="restituito(oggetto)"><ion-icon name = "close-circle" ></ion-icon></button>
           </p>
         </ion-item>
         <ion-item-options side="left">

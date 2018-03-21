@@ -20,7 +20,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'form.html',
 })
 export class FormPage {
-  oggetti: OggettoPrestato[] = [];
+  oggetti: OggettoPrestato[];
   oggettoRicevuto: OggettoPrestato;
   users: User[];
   nome: string;
@@ -35,15 +35,18 @@ export class FormPage {
               private servizioOggetto: OggettoProvider,
               private nativeStorage: NativeStorage) {
     this.oggettoRicevuto = this.navParams.get('oggetto');
-    this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
-    this.servizioOggetto.getUsers().subscribe(users => this.users = users);
     this.nome = '';
     this.data = '';
     this.idUser = 1;
     this.id = 0;
+    this.oggetti = [];
   }
 
   ionViewDidLoad() {
+    this.nativeStorage.getItem('oggetti').then(data => this.oggetti = data);
+    // this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
+    this.servizioOggetto.getUsers().subscribe(users => this.users = users);
+    
     if(this.oggettoRicevuto){
       this.nome = this.oggettoRicevuto.nome;
       this.idUser = this.oggettoRicevuto.idUser;
@@ -61,15 +64,6 @@ export class FormPage {
     }
   }
 
-  isUserExist(id: number){
-    const temp = this.users.find(user => user.id === id);
-    if(temp){
-      return temp.id;
-    } else {
-      return id;
-    }
-  }
-
   salvaDati(){
     if(this.oggetti){
       const newOggetto = new OggettoPrestato();
@@ -77,11 +71,12 @@ export class FormPage {
       newOggetto.data = this.data;
       newOggetto.id = this.id + 1;
       newOggetto.stato = false;
-      newOggetto.idUser = this.isUserExist(this.idUser);
+      newOggetto.idUser = this.idUser;
       newOggetto.imgUrl = this.base64Image;
       this.oggetti.push(newOggetto);
-      this.nativeStorage.setItem('oggetti', this.oggetti);
-      this.navCtrl.push(HomePage);
+      this.nativeStorage.setItem('oggetti', this.oggetti).then(
+        () => {this.navCtrl.push(HomePage);}
+      );
     }
   }
 
