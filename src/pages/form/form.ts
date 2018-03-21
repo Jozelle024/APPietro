@@ -20,8 +20,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'form.html',
 })
 export class FormPage {
-  options: CameraOptions;
-  imageUrl;
+  oggetti: OggettoPrestato[];
   oggettoRicevuto: OggettoPrestato;
   newOggetto: OggettoPrestato = new OggettoPrestato();
   users: User[];
@@ -29,6 +28,8 @@ export class FormPage {
   idUser: number;
   nomeUser: string;
   data: string;
+  base64Image;
+  photos;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private camera: Camera,
@@ -53,8 +54,17 @@ export class FormPage {
   }
 
   takePicture(){
-    this.camera.getPicture().then((imageData) => {
-      this.imageUrl = imageData;
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: 0
+    }
+    this.camera.getPicture(options).then((imageData) => {
+      this.base64Image = "data:image/jpeg;base64," + imageData
+      this.photos.push(this.base64Image);
+      this.photos.reverse();
       console.log('prova');
     },(error) => console.error(error))
   }

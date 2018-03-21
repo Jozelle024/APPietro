@@ -27,11 +27,14 @@
 
     <ion-item>
       <ion-label fixed><h2>Data</h2></ion-label>
-      <ion-input type="text" [(ngModel)]="data"></ion-input>
+      <ion-input type="date" [(ngModel)]="data"></ion-input>
     </ion-item>
 
     <ion-item tappable (click)="takePicture()">
         <ion-label fixed><h2>Foto</h2><ion-icon name="camera"></ion-icon></ion-label>
+        <ion-card class="block">
+          <img [src]="photo" *ngIf="photo">
+        </ion-card>
     </ion-item>
   </ion-list>
 
