@@ -32,11 +32,11 @@
 
     <ion-item tappable (click)="takePicture()">
         <ion-label fixed><h2>Foto</h2><ion-icon name="camera"></ion-icon></ion-label>
-        <ion-card class="block">
-          <img [src]="photo" *ngIf="photo">
-        </ion-card>
     </ion-item>
   </ion-list>
+    <ion-card class="block">
+      <img [src]="photo" *ngIf="photo">
+    </ion-card>
 
     <ion-buttons end>
         <button ion-button color="secondary" (click)="salvaDati()">Salva</button>

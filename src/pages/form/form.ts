@@ -20,14 +20,14 @@ import { HomePage } from '../home/home';
   templateUrl: 'form.html',
 })
 export class FormPage {
-  oggetti: OggettoPrestato[];
+  oggetti: OggettoPrestato[] = [];
   oggettoRicevuto: OggettoPrestato;
-  newOggetto: OggettoPrestato = new OggettoPrestato();
   users: User[];
   nome: string;
   idUser: number;
   nomeUser: string;
   data: string;
+  id: number;
   base64Image;
   photos;
   constructor(public navCtrl: NavController,
@@ -36,16 +36,17 @@ export class FormPage {
               private servizioOggetto: OggettoProvider,
               private nativeStorage: NativeStorage) {
     this.oggettoRicevuto = this.navParams.get('oggettoRicevuto');
-    console.log(this.navParams.get('oggettoRicevuto'));
     this.servizioOggetto.getUsers().subscribe(users => this.users = users);
     this.nome = '';
     this.data = '';
-    this.idUser = 0;
+    this.idUser = 1;
+    this.id = 0;
   }
 
   ionViewDidLoad() {
-    this.caricaDati();
-    console.log(this.oggettoRicevuto);
+    if(this.oggettoRicevuto){
+      this.nome = this.oggettoRicevuto.nome;
+    }
   }
 
   getUser(id: number):string{
@@ -53,9 +54,26 @@ export class FormPage {
     return temp.nome;
   }
 
+  salvaDati(){
+    if(this.oggetti){
+      const newOggetto = new OggettoPrestato();
+      newOggetto.id = this.id + 1;
+      newOggetto.nome = this.nome;
+      newOggetto.stato = false;
+      newOggetto.data = this.data;
+      newOggetto.idUser = this.idUser;
+      this.oggetti.push(newOggetto);
+      console.log(this.oggetti);
+      this.nativeStorage.setItem('oggetti', this.oggetti);
+      this.navCtrl.push(HomePage, {
+        insertedOggetti: this.oggetti
+      })
+    }
+  }
+
   takePicture(){
     const options: CameraOptions = {
-      quality: 50,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -64,27 +82,7 @@ export class FormPage {
     this.camera.getPicture(options).then((imageData) => {
       this.base64Image = "data:image/jpeg;base64," + imageData
       this.photos.push(this.base64Image);
-      this.photos.reverse();
       console.log('prova');
     },(error) => console.error(error))
-  }
-  
-  caricaDati(){
-      console.log(this.oggettoRicevuto);
-  }
-
-  salvaDati(){
-    if(!this.oggettoRicevuto) {
-      const newOggetto = new OggettoPrestato();
-      newOggetto.id =  1;
-      newOggetto.nome = this.nome;
-      newOggetto.stato = false;
-      newOggetto.data = this.data;
-      newOggetto.idUser = 1;
-      this.nativeStorage.setItem('oggetto', newOggetto).then(
-        ()=> console.log('Set item success')
-      );
-      this.navCtrl.push(HomePage);
-    }
   }
 }

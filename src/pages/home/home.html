@@ -15,7 +15,10 @@
     <ion-list *ngIf="oggetti">
       <ion-list-header>Oggetti Prestati</ion-list-header>
       <ion-item-sliding>
-        <ion-item *ngFor="let oggetto of oggetti">
+        <ion-item *ngFor="let oggetto of insertedOggetti">
+          <ion-avatar>
+              <img src="#">
+          </ion-avatar>
           <h1>{{oggetto.nome}}</h1>
           <p>prestato a: {{getUser(oggetto.idUser)}}, in data: {{oggetto.data}}</p>
           <p>Restituito: {{isRestituito(oggetto)}} 

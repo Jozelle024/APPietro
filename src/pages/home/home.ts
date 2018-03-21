@@ -11,15 +11,16 @@ import { NativeStorage } from '@ionic-native/native-storage';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  oggetti: OggettoPrestato[];
+  oggetti: OggettoPrestato[] = [];
+  insertedOggetti: OggettoPrestato [];
   users: User[];
 
   constructor(public navCtrl: NavController,
               private servizioOggetto: OggettoProvider,
               private nativeStorage: NativeStorage) {
     //this.servizioOggetto.getOggettiPrestati().subscribe(oggetti => this.oggetti = oggetti);
-    this.oggetti = [];
     this.servizioOggetto.getUsers().subscribe(users => this.users = users);
+    this.insertedOggetti = [];
   }
 
   ionViewDidLoad(){
@@ -27,8 +28,9 @@ export class HomePage {
   }
 
   getOggettiStorage(){
-    this.nativeStorage.getItem('oggetto').then(oggetto => {
-      this.oggetti = this.oggetti.concat(oggetto);
+    this.nativeStorage.getItem('oggetti').then(data => {
+      this.insertedOggetti = data;
+      console.log(this.insertedOggetti);
     })
   }
 
