@@ -17,7 +17,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-list *ngIf="insertedOggetti">
+    <ion-list *ngIf="insertedOggetti && insertedOggetti.length > 0">
       <div *ngFor="let oggetto of insertedOggetti">
         <ion-list-header>Oggetti Prestati</ion-list-header>
 
